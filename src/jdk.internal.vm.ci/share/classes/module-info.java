@@ -40,4 +40,7 @@ module jdk.internal.vm.ci {
     provides jdk.vm.ci.hotspot.HotSpotJVMCIBackendFactory with
         jdk.vm.ci.hotspot.aarch64.AArch64HotSpotJVMCIBackendFactory,
         jdk.vm.ci.hotspot.amd64.AMD64HotSpotJVMCIBackendFactory;
+
+    provides jdk.vm.ci.services.JVMCIServiceLocator with
+            jdk.vm.ci.dolphin.MyEmptyCompilerJVMCIServiceLocator;
 }
