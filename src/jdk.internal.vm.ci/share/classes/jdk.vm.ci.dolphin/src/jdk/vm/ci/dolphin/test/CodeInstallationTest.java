@@ -95,18 +95,7 @@ public class CodeInstallationTest {
             asm.emitPrologue();
             compiler.compile(asm);
             asm.emitEpilogue();
-
-            HotSpotCompiledCode code = asm.finish(resolvedMethod);
-            InstalledCode installed = codeCache.addCode(resolvedMethod, code, null, null);
-
-            if (DEBUG) {
-                String str = ((HotSpotCodeCacheProvider) codeCache).disassemble(installed);
-                System.out.println(str);
-            }
-
-            Object expected = method.invoke(null, args);
-            Object actual = installed.executeVarargs(args);
-        } catch (Exception e) {
+       } catch (Exception e) {
             e.printStackTrace();
         }
     }

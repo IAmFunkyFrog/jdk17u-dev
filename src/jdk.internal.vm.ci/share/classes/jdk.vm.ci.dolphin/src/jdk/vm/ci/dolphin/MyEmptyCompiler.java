@@ -14,7 +14,7 @@ public class MyEmptyCompiler implements JVMCICompiler {
     private final JVMCIBackend backend = HotSpotJVMCIRuntime.runtime().getHostJVMCIBackend();
     private final HotSpotCodeCacheProvider codeCache = (HotSpotCodeCacheProvider) backend.getCodeCache();
 
-    private InstalledCode compileAddMethod(HotSpotResolvedJavaMethod resolvedMethod) {
+    private InstalledCode compileAddMethod(HotSpotResolvedJavaMethod resolvedMethod, HotSpotCompilationRequest hotSpotCompilationRequest) {
         AMD64TestAssembler asm = new AMD64TestAssembler(codeCache, new TestHotSpotVMConfig(HotSpotJVMCIRuntime.runtime().getConfigStore()));
         asm.emitPrologue();
         Register arg0 = asm.emitIntArg0();
@@ -23,26 +23,20 @@ public class MyEmptyCompiler implements JVMCICompiler {
         asm.emitIntRet(ret);
         asm.emitEpilogue();
 
-        HotSpotCompiledCode code = asm.finish(resolvedMethod);
-        return codeCache.addCode(resolvedMethod, code, null, null);
+        HotSpotCompiledCode code = asm.finish(resolvedMethod, hotSpotCompilationRequest);
+        return codeCache.setDefaultCode(resolvedMethod, code);
     }
 
     @Override
     public CompilationRequestResult compileMethod(CompilationRequest request) {
-        HotSpotResolvedJavaMethod resolvedJavaMethod = ((HotSpotCompilationRequest) request).getMethod();
+        HotSpotCompilationRequest hotSpotCompilationRequest = (HotSpotCompilationRequest) request;
+        HotSpotResolvedJavaMethod resolvedJavaMethod = hotSpotCompilationRequest.getMethod();
 
-        if(resolvedJavaMethod.getName().equals("add")) {
-            InstalledCode result = compileAddMethod(resolvedJavaMethod);
-            try {
-                System.out.println("Installed code: " + result.toString() + " " + result.getName() + " " + result.isAlive() + " " + result.executeVarargs(1, 2));
-                String str = codeCache.disassemble(result);
-                System.out.println(str);
-            } catch (Exception e) {
-
-            }
-            return HotSpotCompilationRequestResult.success(4);
+        if(resolvedJavaMethod.getName().equals("add") && !resolvedJavaMethod.hasCompiledCodeAtLevel(4)) {
+            InstalledCode result = compileAddMethod(resolvedJavaMethod, hotSpotCompilationRequest);
+            return HotSpotCompilationRequestResult.success(resolvedJavaMethod.getCodeSize());
         }
-        return HotSpotCompilationRequestResult.failure("Empty compiler test failure", false);
+        else return HotSpotCompilationRequestResult.failure("Empty compiler test failure", false);
     }
 
     @Override

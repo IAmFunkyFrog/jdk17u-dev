@@ -38,11 +38,8 @@ import jdk.vm.ci.code.site.InfopointReason;
 import jdk.vm.ci.code.site.Mark;
 import jdk.vm.ci.code.site.Reference;
 import jdk.vm.ci.code.site.Site;
-import jdk.vm.ci.hotspot.HotSpotCompiledCode;
+import jdk.vm.ci.hotspot.*;
 import jdk.vm.ci.hotspot.HotSpotCompiledCode.Comment;
-import jdk.vm.ci.hotspot.HotSpotCompiledNmethod;
-import jdk.vm.ci.hotspot.HotSpotConstant;
-import jdk.vm.ci.hotspot.HotSpotResolvedJavaMethod;
 import jdk.vm.ci.meta.AllocatableValue;
 import jdk.vm.ci.meta.Assumptions.Assumption;
 import jdk.vm.ci.meta.InvokeTarget;
@@ -310,14 +307,14 @@ public abstract class TestAssembler {
         return ref;
     }
 
-    public HotSpotCompiledCode finish(HotSpotResolvedJavaMethod method) {
-        int id = method.allocateCompileId(0);
+    public HotSpotCompiledCode finish(HotSpotResolvedJavaMethod method, HotSpotCompilationRequest hotSpotCompilationRequest) {
+        int id = method.allocateCompileId(hotSpotCompilationRequest.getEntryBCI());
         byte[] finishedCode = code.finish();
         Site[] finishedSites = sites.toArray(new Site[0]);
         byte[] finishedData = data.finish();
         DataPatch[] finishedDataPatches = dataPatches.toArray(new DataPatch[0]);
         return new HotSpotCompiledNmethod(method.getName(), finishedCode, finishedCode.length, finishedSites, new Assumption[0], new ResolvedJavaMethod[]{method}, new Comment[0], finishedData, 16,
-                        finishedDataPatches, false, frameSize, deoptRescue, method, 0, id, 0L, false);
+                        finishedDataPatches, false, frameSize, deoptRescue, method, hotSpotCompilationRequest.getEntryBCI(), id, hotSpotCompilationRequest.getJvmciEnv(), false);
     }
 
     protected static class Buffer {
