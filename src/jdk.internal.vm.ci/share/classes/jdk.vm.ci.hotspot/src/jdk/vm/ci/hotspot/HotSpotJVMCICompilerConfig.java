@@ -24,9 +24,7 @@ package jdk.vm.ci.hotspot;
 
 import java.util.List;
 import java.util.Set;
-
 import jdk.vm.ci.code.CompilationRequest;
-import jdk.vm.ci.common.JVMCIError;
 import jdk.vm.ci.common.NativeImageReinitialize;
 import jdk.vm.ci.hotspot.HotSpotJVMCIRuntime.Option;
 import jdk.vm.ci.runtime.JVMCICompiler;

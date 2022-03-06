@@ -7,16 +7,9 @@ import jdk.vm.ci.runtime.JVMCIRuntime;
 
 import jdk.vm.ci.code.CompilationRequestResult;
 
-//my own
-public class MyEmptyCompilerFactory implements JVMCICompilerFactory, JVMCICompiler {
+public class MyEmptyCompilerFactory implements JVMCICompilerFactory {
 
     public MyEmptyCompilerFactory() {
-    }
-
-    @Override
-    public CompilationRequestResult compileMethod(CompilationRequest request) {
-        System.out.println(request.getMethod().getName());
-        return null;
     }
 
     @Override
@@ -26,12 +19,8 @@ public class MyEmptyCompilerFactory implements JVMCICompilerFactory, JVMCICompil
 
     @Override
     public JVMCICompiler createCompiler(JVMCIRuntime rt) {
-        return this;
+        return new MyEmptyCompiler();
     }
 
-    @Override
-    public boolean isGCSupported(int gcIdentifier) {
-        return false;
-    }
 }
 
