@@ -21,7 +21,7 @@
  * questions.
  */
 
-package jdk.vm.ci.dolphin.test;
+package jdk.vm.compiler.test;
 
 import jdk.vm.ci.code.CallingConvention;
 import jdk.vm.ci.code.CodeCacheProvider;

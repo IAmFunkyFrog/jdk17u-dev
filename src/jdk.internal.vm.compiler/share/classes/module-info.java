@@ -24,7 +24,7 @@
  */
 
 /**
-  * JVMCI compiler implementation for the JVM.
+  * JVMCI compiler implementation for the JM.
   *
   * This is an empty and upgradeable module that is a placeholder for an
   * external implementation of a JVMCI compiler. It must be upgradeable so
@@ -38,4 +38,7 @@
 
 module jdk.internal.vm.compiler {
     requires jdk.internal.vm.ci;
+
+    provides jdk.vm.ci.services.JVMCIServiceLocator with
+            jdk.vm.compiler.MyEmptyCompilerJVMCIServiceLocator;
 }

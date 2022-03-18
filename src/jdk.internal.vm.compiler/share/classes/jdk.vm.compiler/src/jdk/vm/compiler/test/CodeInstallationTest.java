@@ -20,18 +20,15 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package jdk.vm.ci.dolphin.test;
+package jdk.vm.compiler.test;
 
 import jdk.vm.ci.aarch64.AArch64;
 import jdk.vm.ci.amd64.AMD64;
 import jdk.vm.ci.code.Architecture;
 import jdk.vm.ci.code.CodeCacheProvider;
-import jdk.vm.ci.code.InstalledCode;
 import jdk.vm.ci.code.TargetDescription;
-import jdk.vm.ci.dolphin.test.aarch64.AArch64TestAssembler;
-import jdk.vm.ci.dolphin.test.amd64.AMD64TestAssembler;
-import jdk.vm.ci.hotspot.HotSpotCodeCacheProvider;
-import jdk.vm.ci.hotspot.HotSpotCompiledCode;
+import jdk.vm.compiler.test.aarch64.AArch64TestAssembler;
+import jdk.vm.compiler.test.amd64.AMD64TestAssembler;
 import jdk.vm.ci.hotspot.HotSpotJVMCIRuntime;
 import jdk.vm.ci.hotspot.HotSpotResolvedJavaMethod;
 import jdk.vm.ci.meta.ConstantReflectionProvider;

@@ -1,8 +1,7 @@
-package jdk.vm.ci.dolphin;
+package jdk.vm.compiler;
 
 import jdk.vm.ci.hotspot.HotSpotJVMCICompilerFactory;
 import jdk.vm.ci.runtime.JVMCICompiler;
-import jdk.vm.ci.runtime.JVMCICompilerFactory;
 import jdk.vm.ci.runtime.JVMCIRuntime;
 
 public class MyEmptyCompilerFactory extends HotSpotJVMCICompilerFactory {

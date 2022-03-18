@@ -22,7 +22,7 @@
  * questions.
  */
 
-package jdk.vm.ci.dolphin.test.aarch64;
+package jdk.vm.compiler.test.aarch64;
 
 import jdk.vm.ci.aarch64.AArch64;
 import jdk.vm.ci.aarch64.AArch64Kind;
@@ -34,8 +34,8 @@ import jdk.vm.ci.code.RegisterValue;
 import jdk.vm.ci.code.StackSlot;
 import jdk.vm.ci.code.site.ConstantReference;
 import jdk.vm.ci.code.site.DataSectionReference;
-import jdk.vm.ci.dolphin.test.TestAssembler;
-import jdk.vm.ci.dolphin.test.TestHotSpotVMConfig;
+import jdk.vm.compiler.test.TestAssembler;
+import jdk.vm.compiler.test.TestHotSpotVMConfig;
 import jdk.vm.ci.hotspot.HotSpotCallingConventionType;
 import jdk.vm.ci.hotspot.HotSpotConstant;
 import jdk.vm.ci.hotspot.HotSpotForeignCallTarget;

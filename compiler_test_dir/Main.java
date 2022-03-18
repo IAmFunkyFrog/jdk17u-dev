@@ -1,14 +1,14 @@
 public class Main {
 
-    public static int add(int a, int b) {
-        return a + b;
+    static int field = 1;
+
+    public static int getField() {
+        return field;
     }
 
     public static void main(String[] args) {
-        int x = 0;
-        for(int i = 0; i < 1000000000; i++) {
-            x += add(i, i + 1);
-        }
-        System.out.println(x);
+        int sum = 0;
+        for(int i = 0; i < 1000000000; i++) sum += getField();
+        System.out.println(sum);
     }
 }

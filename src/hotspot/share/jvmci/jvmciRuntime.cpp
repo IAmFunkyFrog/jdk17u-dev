@@ -20,7 +20,6 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 #include "precompiled.hpp"
 #include "classfile/javaClasses.inline.hpp"
 #include "classfile/symbolTable.hpp"
@@ -1662,6 +1661,7 @@ JVMCI::CodeInstallResult JVMCIRuntime::register_method(JVMCIEnv* JVMCIENV,
                                 char* speculations,
                                 int speculations_len) {
   JVMCI_EXCEPTION_CONTEXT;
+
   nmethod* nm = NULL;
   int comp_level = CompLevel_full_optimization;
   char* failure_detail = NULL;
@@ -1747,6 +1747,7 @@ JVMCI::CodeInstallResult JVMCIRuntime::register_method(JVMCIEnv* JVMCIENV,
           MutexUnlocker locker(MethodCompileQueue_lock);
           CompileBroker::handle_full_code_cache(CodeCache::get_code_blob_type(comp_level));
         }
+
         result = JVMCI::cache_full;
       } else {
         nm->set_has_unsafe_access(has_unsafe_access);

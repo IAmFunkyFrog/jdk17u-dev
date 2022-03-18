@@ -37,7 +37,7 @@
  * @run junit/othervm -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -XX:-UseJVMCICompiler jdk.vm.ci.code.test.SimpleCodeInstallationTest
  */
 
-package jdk.vm.ci.dolphin.test;
+package jdk.vm.compiler.test;
 
 import jdk.vm.ci.code.Register;
 

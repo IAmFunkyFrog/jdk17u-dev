@@ -34,13 +34,19 @@ module jdk.internal.vm.ci {
     exports jdk.vm.ci.code to jdk.internal.vm.compiler;
     exports jdk.vm.ci.hotspot to jdk.internal.vm.compiler;
 
+    //for test
+    exports jdk.vm.ci.amd64 to
+            jdk.internal.vm.compiler;
+    exports jdk.vm.ci.code.site to
+            jdk.internal.vm.compiler;
+    exports jdk.vm.ci.aarch64 to
+            jdk.internal.vm.compiler;
+    //for test
+
     uses jdk.vm.ci.services.JVMCIServiceLocator;
     uses jdk.vm.ci.hotspot.HotSpotJVMCIBackendFactory;
 
     provides jdk.vm.ci.hotspot.HotSpotJVMCIBackendFactory with
         jdk.vm.ci.hotspot.aarch64.AArch64HotSpotJVMCIBackendFactory,
         jdk.vm.ci.hotspot.amd64.AMD64HotSpotJVMCIBackendFactory;
-
-    provides jdk.vm.ci.services.JVMCIServiceLocator with
-            jdk.vm.ci.dolphin.MyEmptyCompilerJVMCIServiceLocator;
 }

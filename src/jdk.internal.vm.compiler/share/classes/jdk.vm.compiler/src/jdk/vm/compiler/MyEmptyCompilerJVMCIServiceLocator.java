@@ -1,4 +1,4 @@
-package jdk.vm.ci.dolphin;
+package jdk.vm.compiler;
 
 import jdk.vm.ci.runtime.JVMCICompilerFactory;
 import jdk.vm.ci.services.JVMCIServiceLocator;
