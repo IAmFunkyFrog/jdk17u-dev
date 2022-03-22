@@ -3,10 +3,7 @@ package jdk.vm.compiler;
 import jdk.vm.ci.amd64.AMD64;
 import jdk.vm.ci.code.*;
 import jdk.vm.ci.code.site.DataSectionReference;
-import jdk.vm.ci.meta.ConstantPool;
-import jdk.vm.ci.meta.JavaConstant;
-import jdk.vm.ci.meta.JavaField;
-import jdk.vm.ci.meta.ResolvedJavaField;
+import jdk.vm.ci.meta.*;
 import jdk.vm.compiler.test.TestAssembler;
 import jdk.vm.compiler.test.TestHotSpotVMConfig;
 import jdk.vm.compiler.test.amd64.AMD64TestAssembler;
@@ -14,6 +11,7 @@ import jdk.vm.ci.hotspot.*;
 import jdk.vm.ci.runtime.JVMCIBackend;
 import jdk.vm.ci.runtime.JVMCICompiler;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 public class MyEmptyCompiler implements JVMCICompiler {
@@ -25,8 +23,9 @@ public class MyEmptyCompiler implements JVMCICompiler {
 
         ConstantPool constantPool = resolvedJavaMethod.getConstantPool();
         HotSpotResolvedJavaField javaField = (HotSpotResolvedJavaField) constantPool.lookupField(1, resolvedJavaMethod, 178);
-        JavaConstant javaConstant = backend.getConstantReflection().readFieldValue(javaField, null);
-        Register ret = asm.emitLoadInt(javaConstant.asInt());
+        HotSpotResolvedObjectType holder = (HotSpotResolvedObjectType) javaField.getDeclaringClass();
+        Register base = asm.emitLoadPointer((HotSpotConstant) holder.klass());
+        Register ret = asm.emitLoadPointer(base, javaField.getOffset());
         asm.emitIntRet(ret);
 
         asm.emitEpilogue();
