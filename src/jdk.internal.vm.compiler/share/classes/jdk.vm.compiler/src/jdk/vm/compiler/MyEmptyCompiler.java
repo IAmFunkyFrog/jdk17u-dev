@@ -11,20 +11,19 @@ import jdk.vm.ci.hotspot.*;
 import jdk.vm.ci.runtime.JVMCIBackend;
 import jdk.vm.ci.runtime.JVMCICompiler;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-
 public class MyEmptyCompiler implements JVMCICompiler {
     private final JVMCIBackend backend = HotSpotJVMCIRuntime.runtime().getHostJVMCIBackend();
     private final HotSpotCodeCacheProvider codeCache = (HotSpotCodeCacheProvider) backend.getCodeCache();
 
     private InstalledCode compileStaticGet(TestAssembler asm, HotSpotResolvedJavaMethod resolvedJavaMethod, HotSpotCompilationRequest compilationRequest) {
+        TestHotSpotVMConfig config = new TestHotSpotVMConfig(HotSpotJVMCIRuntime.runtime().getConfigStore());
         asm.emitPrologue();
 
         ConstantPool constantPool = resolvedJavaMethod.getConstantPool();
         HotSpotResolvedJavaField javaField = (HotSpotResolvedJavaField) constantPool.lookupField(1, resolvedJavaMethod, 178);
-        HotSpotResolvedObjectType holder = (HotSpotResolvedObjectType) javaField.getDeclaringClass();
-        Register base = asm.emitLoadPointer((HotSpotConstant) holder.klass());
+        Constant holder = backend.getConstantReflection().asObjectHub(javaField.getDeclaringClass());
+        Register klass = asm.emitLoadPointer((HotSpotConstant) holder);
+        Register base = asm.emitLoadPointer(asm.emitLoadPointer(klass, config.classMirrorHandleOffset), 0);
         Register ret = asm.emitLoadPointer(base, javaField.getOffset());
         asm.emitIntRet(ret);
 

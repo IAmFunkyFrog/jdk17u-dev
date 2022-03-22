@@ -8,11 +8,11 @@ public class Main {
 
     public static void main(String[] args) {
         long sum = 0;
-        for(int i = 0; i < 1000000000; i++) sum += getField();
+        for(int i = 0; i < 10000000; i++) sum += getField();
         System.out.println(sum);
         sum = 0;
         field = 2;
-        for(int i = 0; i < 1000000000; i++) sum += getField();
+        for(int i = 0; i < 10000000; i++) sum += getField();
         System.out.println(sum);
     }
 }
