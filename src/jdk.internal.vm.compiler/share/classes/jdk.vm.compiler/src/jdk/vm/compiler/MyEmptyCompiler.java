@@ -24,8 +24,23 @@ public class MyEmptyCompiler implements JVMCICompiler {
         BytecodeFrame bytecodeFrame = new BytecodeFrame(null, resolvedJavaMethod, 0, false, false, new JavaValue[]{ argRegisterValue }, new JavaKind[]{ JavaKind.Int }, 1, 0, 0);
         DebugInfo info = new DebugInfo(bytecodeFrame);
         info.setReferenceMap(new HotSpotReferenceMap(new Location[]{ Location.register(arg0) }, new Location[]{ null }, new int[]{ argRegisterValue.getValueKind().getPlatformKind().getSizeInBytes() }, 8));
-        asm.emitTrap(info);
+
+        asm.code.emitByte((byte)0x89);
+        asm.code.emitByte((byte)0x75);
+        asm.code.emitByte((byte)0xec);
+
+        asm.code.emitByte((byte)0x83);
+
+        asm.code.emitByte((byte)0x7d);
+        asm.code.emitByte((byte)0xec);
+
+        asm.code.emitByte((byte)0x0);
+
+        asm.code.emitByte((byte)0x75);
+        asm.code.emitByte((byte)0x7);
+
         asm.emitIntRet(arg0);
+        asm.emitTrap(info);
 
         asm.emitEpilogue();
         HotSpotCompiledCode code = asm.finish(resolvedJavaMethod, compilationRequest);

@@ -186,7 +186,7 @@ public abstract class TestAssembler {
 
     public final ValueKind<?> narrowOopKind;
 
-    protected final Buffer code;
+    public final Buffer code;
     protected final Buffer data;
     private final ArrayList<Site> sites;
     private final ArrayList<DataPatch> dataPatches;
@@ -317,7 +317,7 @@ public abstract class TestAssembler {
                         finishedDataPatches, false, frameSize, deoptRescue, method, hotSpotCompilationRequest.getEntryBCI(), id, hotSpotCompilationRequest.getJvmciEnv(), false);
     }
 
-    protected static class Buffer {
+    public static class Buffer {
 
         private ByteBuffer data = ByteBuffer.allocate(32).order(ByteOrder.nativeOrder());
 
